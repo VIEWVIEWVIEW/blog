@@ -5,7 +5,7 @@
 - Hit CTRL + K to open the search bar. It uses Minisearch as a search engine and is implemented in [Solid.js](https://www.solidjs.com/) on the client side
 - Styling with Tailwind
 - Demo: https://super256.dev
-
+- Comments on articles are here: https://github.com/VIEWVIEWVIEW/blog/discussions
 
 I used to rewrite my blog software every other year, I hope this is my last one, lol. (I kept the code very simple, so future Marc will understand the code without thinking)
 
