@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+import ArticleRow from "../../components/ArticleRow.astro";
+
+const allPosts = await getCollection("posts");
+
+// sort by date
+allPosts.sort((a, b) => {
+  // get date in milliseconds and get the difference
+  return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+});
+
+// only show published posts
+const filteredPosts = allPosts.filter((post) => {
+  return post.data.draft === false;
+});
+---
+
+<BaseLayout title="articles">
+  <main>
+    {/* Head */}
+    <h1
+      class="text-5xl mt-5 font-extrabold dark:text-gray-50 mb-4 tracking-tighter"
+    >
+      Articles
+    </h1>
+
+    {/* Articles */}
+    <div class="flex flex-col">
+      {filteredPosts.map((post) => <ArticleRow post={post} />)}
+    </div>
+  </main>
+</BaseLayout>

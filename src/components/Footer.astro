@@ -1,0 +1,16 @@
+---
+const currentYear = new Date().getFullYear();
+const githubDiscussionsLink = import.meta.env.PUBLIC_GITHUB_DISCUSSIONS_LINK;
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
+---
+
+<div class="mt-10">
+  <hr />
+  <footer class="mt-5 mb-20 flex flex-row justify-evenly dark:text-gray-100 hover:text-gray-800 dark:hover:text-gray-200">
+    <a href="/rss.xml">RSS Feed</a>
+
+    <a href={githubDiscussionsLink}>Discussions</a>
+
+    <a href={`mailto:${contactEmail}`}>Contact</a>
+  </footer>
+</div>

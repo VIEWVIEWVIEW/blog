@@ -1,0 +1,25 @@
+---
+import { type CollectionEntry, getEntryBySlug } from "astro:content";
+export interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+
+const entry = await getEntryBySlug('posts', post.slug);
+const { Content, headings } = await entry.render();
+---
+
+<article class="border dark:border-slate-600 rounded-lg hover:bg-zinc-100 dark:hover:bg-gray-600 py-3 my-5 px-4">
+  <a href={`/articles/${post.slug}`} class="space-y-2">
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      <time datetime={post.data.publishDate.toDateString()}
+        >{post.data.publishDate.toLocaleDateString()}</time
+      >
+    </p>
+    <h2 class="dark:text-gray-50 font-semibold text-lg">{post.data.title}</h2>
+    <p class="dark:text-gray-50">{post.data.description}</p>
+
+    <div class="divide-y divide-gray-200 w-full"></div>
+  </a>
+</article>

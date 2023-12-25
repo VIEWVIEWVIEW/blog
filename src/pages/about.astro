@@ -1,0 +1,77 @@
+---
+const pageTitle = "About Me";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={pageTitle}>
+  <main class="prose dark:prose-invert mt-5">
+    <h2 class="font-serif">Hi, I'm Marc</h2>
+    <p>
+      You probably know me under my username super256. I'm currenctly stuying
+      computer science in Germany; my current interests are any kind of
+      computing, computer security, finance and some very casual gardening.
+    </p>
+
+    <h2>Short CV:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>To</th>
+          <th>What</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2014</td>
+          <td>2018</td>
+          <td>EngineOwning Software UG</td>
+        </tr>
+        <tr>
+          <td>2017</td>
+          <td>2018</td>
+          <td>Studied CS at FH-SWF</td>
+        </tr>
+        <tr>
+          <td>2018</td>
+          <td>2020</td>
+          <td>Worked in IT-Services FH-SWF</td>
+        </tr>
+        <tr>
+          <td>2020</td>
+          <td>2020</td>
+          <td>Worked at Amazon in Operations Technology</td>
+        </tr>
+        <tr>
+          <td>2020</td>
+          <td>2024</td>
+          <td>Back to getting my CS Bachelor Degree at FH-SWF</td>
+        </tr>
+      </tbody>
+    </table>
+
+    {
+      /*
+    <!--ul>
+      <li>2014 - 2018: EngineOwning Software UG</li>
+      <li>2017 - 2018: Studied CS at FH-SWF</li>
+      <li>2018 - 2020: Worked in IT-Services FH-SWF</li>
+      <li>2020 - 2020: Worked at Amazon in Operations Technology</li>
+      <li>2020 - 2023: Back to getting my CS Bachelor Degree at FH-SWF</li>
+    </ul-->
+  */
+    }
+
+    <h2>Contact & Socials</h2>
+    <ul>
+      <li>
+        Github: <a href="https://github.com/viewviewview"
+          >VIEWVIEWVIEW</a
+        >
+      </li>
+      <li>Email: <a href="mailto:hi@super256.dev">hi@super256.dev</a></li>
+      <li>Twitter: <a href="https://twitter.com/superx256">@superx256</a></li>
+      <li>Matrix: @vm86:matrix.org</li>
+    </ul>
+  </main>
+</BaseLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /*
+
+# I don't like the current articles, and I'm planning to re-write them as a practice on technical writing, so yea, I don't want search engines to index anything just yet

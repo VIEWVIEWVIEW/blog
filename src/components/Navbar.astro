@@ -1,0 +1,60 @@
+---
+import ThemeButton from "../components/ThemeButton";
+
+// Get the current page path
+const currentPath = Astro.url.pathname;
+
+// navbar items
+const navbarItems = [
+  {
+    name: "Home",
+    link: "/",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "Articles",
+    link: "/articles",
+  },
+];
+
+// css class for active link
+const activeLink = (link: string) => {
+  return currentPath === link
+    ? "bg-gray-100 text-gray-900 dark:bg-gray-700"
+    : "";
+};
+
+import Search from "./Search";
+---
+
+<header>
+  <nav class="flex flex-row justify-between py-4 relative">
+
+
+    <div class="flex flex-row md:space-x-2 space-x-1">
+      {
+        /* Navbar Items */
+        navbarItems.map((item) => {
+          return (
+            <a
+              href={item.link}
+              class={`text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-100 rounded-md md:py-2 md:px-3 py-2 px-2  inline-flex items-center text-sm font-medium ${activeLink(
+                item.link
+              )}`}
+            >
+              {item.name}
+            </a>
+          );
+        })
+      }
+      {/* Search Bar */}
+      <Search client:only />
+    </div>
+
+    {/* Theme Button for CHanging theme */}
+    <ThemeButton client:only />
+  </nav>
+</header>

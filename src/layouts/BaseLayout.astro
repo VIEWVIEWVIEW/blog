@@ -1,0 +1,81 @@
+---
+import "../css/base.css";
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props || Astro.props;
+
+import "@fontsource/inter";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!DOCTYPE html>
+<!-- 
+		Always remember to comment your code :)
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    {
+      /* Ok, if the user prefers a theme, we have it stored in localStoage (see "ThemeButton" component).
+		In order to prevent a flash, we need to inline the following script, which will read from localStorage,
+		and apply the correct color theme.
+		See:  https://css-tricks.com/flash-of-inaccurate-color-theme-fart/
+		and https://tailwindcss.com/docs/dark-mode
+		*/
+    }
+    <script is:inline>
+      // Localstorage always overrides the OS theme
+      function getTheme() {
+        // 1. Force dark theme if user has set it
+        if (localStorage.getItem("theme") === "dark") return "dark";
+
+        // 2. Force light theme if user has set it
+        if (localStorage.getItem("theme") === "light") return "light";
+
+        // 3. User has no override. Let's listen to the system
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches)
+          return "dark";
+
+        // 4. Return light so "dark" is removed from the documentElement and "prefers-color-scheme" is obeyed
+        return "light";
+      }
+
+      const theme = getTheme();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      // we also install a listener, so that when the OS changes the theme, we change it too
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (e.matches) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        });
+    </script>
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 max-w-3xl mx-auto">
+    <div
+      class="bg-white dark:bg-slate-800 min-h-screen md:px-8 flex flex-col px-3"
+    >
+      <main class="flex-grow">
+        <Navbar />
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+---
+import { getCollection, getEntryBySlug } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const slug = Astro.params.slug;
+
+// if no slug, redirect to 404
+if (!slug) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+
+// get single article
+const entry = await getEntryBySlug("posts", slug);
+
+// if no entry or entry is a draft, redirect to 404
+if (!entry || entry.data.draft) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+
+// else, render the page
+const { Content } = await entry.render();
+
+// Giscus constants
+const {
+  PUBLIC_GISCUS_CATEGORY,
+  PUBLIC_GISCUS_REPO,
+  PUBLIC_GISCUS_REPO_ID,
+  PUBLIC_GISCUS_CATEGORY_ID,
+} = import.meta.env;
+
+export const getStaticPaths = async () => {
+  const posts = await getCollection("posts");
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+  return paths;
+};
+---
+
+<BaseLayout title={`${entry.data.title}`}>
+  <article class="prose dark:prose-invert max-w-none mt-5 prose-rose">
+    {
+      /* Header above the rendered markdown. This will show the title, image header, publish date etc which is set in the frontmatter */
+    }
+    <section class="not-prose">
+      <h1
+        class="text-5xl mt-5 font-extrabold dark:text-gray-50 mb-4 tracking-tighter"
+      >
+        {entry.data.title}
+      </h1>
+      {/* Description */}
+      {entry.data.description ? <p class="">{entry.data.description}</p> : ""}
+
+      {/* Image */}
+      {
+        entry.data.imageHeader ? (
+          <div class="flex flex-row justify-center">
+            <img
+              src={entry.data.imageHeader.url}
+              alt={entry.data.title}
+              class="m-4  dark:bg-white p-4 rounded-md"
+            />
+          </div>
+        ) : (
+          ""
+        )
+      }
+
+      {/* Publish date */}
+      <p class="text-xs dark:text-gray-400 mt-5 mb-2">
+        Published on: {entry.data.publishDate.toLocaleDateString()}
+        {
+          entry.data.updateDate ? (
+            <span>
+              | Updated on {entry.data.updateDate.toLocaleDateString()}
+            </span>
+          ) : (
+            ""
+          )
+        }
+      </p>
+      <hr class="my-3" />
+    </section>
+
+    {/* Actual markdown content */}
+    <Content />
+
+    <hr />
+
+    {/* Minimize layout shift from loading state to comment state */}
+    <div class="my-10 min-h-[450px]">
+      {/* Giscus for comments */}
+      <script
+        src="https://giscus.app/client.js"
+        data-repo={PUBLIC_GISCUS_REPO}
+        data-repo-id={PUBLIC_GISCUS_REPO_ID}
+        data-category={PUBLIC_GISCUS_CATEGORY}
+        data-category-id={PUBLIC_GISCUS_CATEGORY_ID}
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async="false"
+        client:only
+        is:inline
+      ></script>
+
+      {
+        /* Script for applying dark/light theme to the giscus comment block.
+      
+          This is fucking ugly but there is no better way to do this.
+         We can't use any context or state management from solid/react or whatever in a script-tag in an astro component.
+         So, we do:
+         1.  getting the initial theme from the document
+         2. setting the giscus theme explicitly in ThemeButton.tsx
+      */
+      }
+      <script is:inline>
+        {
+          const theme = document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light";
+          const giscus = document.querySelector(
+            'script[src="https://giscus.app/client.js"]'
+          );
+          console.log("theme", theme);
+          if (giscus) {
+            giscus.setAttribute("data-theme", theme);
+          }
+        }
+      </script>
+    </div>
+  </article>
+</BaseLayout>
