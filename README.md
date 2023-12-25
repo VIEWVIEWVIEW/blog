@@ -7,9 +7,11 @@
 - Demo: https://super256.dev
 - Comments on articles are here: https://github.com/VIEWVIEWVIEW/blog/discussions
 
-I used to rewrite my blog software every other year, I hope this is my last one, lol. (I kept the code very simple, so future Marc will understand the code without thinking)
+I used to rewrite my blog software every other year, I hope this is my last one, lol. 
 
 This repo is only a public snapshot of my blog without any articles, as I want to keep my drafts and stuff private. Use this repo as inspiration or whatever if you're interested in it.
+
+I kept the code very simple, so future Marc will understand the code without thinking.
 
 ## 🚀 Project Structure
 
