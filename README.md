@@ -1,12 +1,22 @@
 # Astro Blog
 
+- Deployed on vercel
+- Completely static
+- Hit CTRL + K to open the search bar. It uses Minisearch as a search engine and is implemented in [Solid.js](https://www.solidjs.com/) on the client side
+- Styling with Tailwind
+- Demo: https://super256.dev
+
+
+I used to rewrite my blog software every other year, I hope this is my last one, lol. (I kept the code very simple, so future Marc will understand the code without thinking)
+
+This repo is only a public snapshot of my blog without any articles, as I want to keep my drafts and stuff private. Use this repo as inspiration or whatever if you're interested in it.
 
 ## 🚀 Project Structure
 
 The blog is structured like the following
 
 ```
-/
+|
 ├── public/
 │   └── favicon.svg
 |   └── hello/ // Static assets for articles (e.g. images)
@@ -48,9 +58,3 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`      | Preview your build locally, before deploying     |
 | `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro --help` | Get help using the Astro CLI                     |
-
-## Interesting things
-
-### Search
-
-Hit CTRL + K to open the search bar. It uses Minisearch as a search engine and is implemented in [Solid.js](https://www.solidjs.com/).
